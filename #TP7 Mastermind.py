@@ -3,6 +3,18 @@
 import random
 import os
 
+# dictionnaire pour faire la conversion lettre en emoji
+map_couleurs = {
+    "R": "🔴",
+    "G": "🟢",
+    "B": "🔵",
+    "Y": "🟡",
+    "P": "🟣",
+    "W": "⚪",
+    "K": "⚫"
+}
+
+
 def main():
     
     print(" *** Jeu du Mastermind ***")
@@ -28,7 +40,7 @@ def main():
 
 def generer_combinaison():
     
-    couleurs = ['🔴', '🟢', '🔵', '🟡', '🟣', '⚪', '⚫']
+    couleurs = list(map_couleurs.values())
 
     combinaison = []
 
