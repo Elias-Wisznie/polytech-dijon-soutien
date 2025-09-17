@@ -53,7 +53,24 @@ def generer_combinaison():
 
     return combinaison
 
-def jeu():
+
+def conversion_reponse(reponse_joueur): #Converti la réponse du jour en quelque chose de comparable avec la combinaison générée
+    
+    combinaison_convertie = []
+    for lettre in reponse_joueur.upper():
+        if lettre in map_couleurs:
+            combinaison_convertie.append(map_couleurs[lettre])
+    return combinaison_convertie
+
+
+def comparaison(): #Comparaison de la réponse de l'utilisateur pour lui indiquer combien sont bien ou mal placés
+
+
+
+
+
+
+def jeu(): #là où se passe le gameplay
 
     os.system('cls')
 
@@ -66,10 +83,14 @@ def jeu():
 
     n = 12
 
-    for i in range(n):
-        
-        try:
-            rep = int(input("Saisissez une combinaison : "))
+    for essai in range(n, n+1):
+        rep = input(("Saisissez votre combinaison:"))
+
+        essai_converti = conversion_reponse(rep)
+
+        if len(essai_converti) != 4:
+            print("Saisie invalide, utilisez 4 lettres")
+            continue
 
 
 
