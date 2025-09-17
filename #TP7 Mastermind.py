@@ -1,7 +1,7 @@
 #TP7 Mastermind
 
 import random
-
+import os
 
 def main():
     
@@ -42,7 +42,24 @@ def generer_combinaison():
     return combinaison
 
 def jeu():
-    print("Hola")
+
+    os.system('cls')
+
+    print("\nCouleurs disponibles :")
+    print("🔴 = R | 🟢 = G | 🔵 = B | 🟡 = Y | 🟣 = P | ⚪ = W | ⚫ = K")
+    print("Entrez une combinaison de 4 lettres (exemple : RBYK)")
+    print("L'objectif est de trouver la combinaison cachée en 12 tentatives")
+
+    combinaison = generer_combinaison()
+
+    n = 12
+
+    for i in range(n):
+        
+        try:
+            rep = int(input("Saisissez une combinaison : "))
+
+
 
 
 
