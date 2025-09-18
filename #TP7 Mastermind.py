@@ -90,14 +90,14 @@ def comparaison(combinaison, proposition):
     copie_combinaison = combinaison.copy()
     copie_proposition = proposition.copy()
 
-    # Étape 1 : compter les bien placés
+    # Etape 1 : compter les bien placés
     for i in range(longueur_combinaison):
         if copie_proposition[i] == copie_combinaison[i]:
             bien_places += 1
             copie_combinaison[i] = None  # on marque pour ne plus la compter
             copie_proposition[i] = None
 
-    # Étape 2 : compter les mal placés
+    # Etape 2 : compter les mal placés
     for i in range(longueur_combinaison):
         if copie_proposition[i] is not None and copie_proposition[i] in copie_combinaison:
             mal_places += 1
@@ -111,6 +111,9 @@ def comparaison(combinaison, proposition):
 
 
 def jeu():  # là où se passe le gameplay
+
+    global score
+    global nbr_parties_jouees
 
     os.system('cls')
 
