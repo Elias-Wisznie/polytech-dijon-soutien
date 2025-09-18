@@ -11,11 +11,40 @@ import os
 # Liste des couleurs disponibles
 couleurs_disponibles = ["R", "G", "B", "Y", "P", "W", "K"]
 
-
 longueur_combinaison = 4 # nombre d'éléments du code secret 
 tentatives_max = 12 #nombre maximum de tentatives
 nbr_parties_jouees = 0 #nombre de parties qui ont été lancées au total
 score = 0 #score du joueur, +1pt à chaque partie gagnée
+
+
+
+# chemin du fichier de stats sur le bureau 
+fichier_stats = os.path.join(os.path.expanduser("~"), "Desktop", "mastermind_stats.txt")
+
+
+
+
+
+
+
+def charger_stats():
+    global nbr_parties_jouees, score
+    try:
+        with open(fichier_stats, "r") as f:
+            lignes = f.readlines()
+            nbr_parties_jouees = int(lignes[0].strip())
+            score = int(lignes[1].strip())
+    except:
+        nbr_parties_jouees = 0
+        score = 0
+
+def sauvegarder_stats():
+    with open(fichier_stats, "w") as f:
+        f.write(str(nbr_parties_jouees) + "\n")
+        f.write(str(score) + "\n")
+
+
+
 
 
 
@@ -24,7 +53,11 @@ def main():
     
     global longueur_combinaison
 
+    # charger stats au lancement
+    charger_stats()
+
     print(" *** Jeu du Mastermind ***")
+    print(f"Parties jouées : {nbr_parties_jouees} | Score : {score}\n")
 
     while True:
         print("Sélectionnez une option de jeu")
@@ -34,6 +67,8 @@ def main():
             menu = int(input("Saisissez un nombre : "))
             if menu == 1:
                 jeu()
+                # sauvegarder stats après chaque partie
+                sauvegarder_stats()
             elif menu == 2:
                 print("Mode en développement")
             elif menu == 3:
@@ -54,6 +89,8 @@ def main():
 
 
 
+
+# le reste du code reste identique à ton script original
 def generer_combinaison():
     
     # couleurs aléatoires, doublons possibles
@@ -81,8 +118,9 @@ def conversion_reponse(reponse_joueur):
 
 
 
+
 def comparaison(combinaison, proposition):  
-    # Comparaison de la réponse de l'utilisateur pour lui indiquer combien sont bien ou mal placés
+    # Comparaison de la réponse de l'utilisateur pour indiquer combien sont bien ou mal placés
 
     bien_places = 0
     mal_places = 0
@@ -90,21 +128,22 @@ def comparaison(combinaison, proposition):
     copie_combinaison = combinaison.copy()
     copie_proposition = proposition.copy()
 
-    # Etape 1 : compter les bien placés
+    # Etape 1 compter les bien placés
     for i in range(longueur_combinaison):
         if copie_proposition[i] == copie_combinaison[i]:
             bien_places += 1
             copie_combinaison[i] = None  # on marque pour ne plus la compter
             copie_proposition[i] = None
 
-    # Etape 2 : compter les mal placés
+    # Etape 2 compter les mal placés
     for i in range(longueur_combinaison):
         if copie_proposition[i] is not None and copie_proposition[i] in copie_combinaison:
             mal_places += 1
-            # on enlève cette couleur de la liste pour éviter de la compter deux fois
+            # on enleve cette couleur de la liste pourpas la compter deux fois
             copie_combinaison[copie_combinaison.index(copie_proposition[i])] = None
 
     return bien_places, mal_places
+
 
 
 
@@ -146,8 +185,6 @@ def jeu():  # là où se passe le gameplay
             print("Vous avez trouvé la combinaison")
             score = score + 1
             return
-
-    print("Vous avez épuisé vos tentatives. La combinaison était :", combinaison)
 
 
 main()
