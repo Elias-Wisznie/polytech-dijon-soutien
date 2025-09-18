@@ -1,5 +1,10 @@
 # TP7 Mastermind
 
+#To do:
+#Save score et nbr parties dans un txt
+#Lire ce txt au setup pour récup les stats
+
+
 import random
 import os
 
@@ -7,8 +12,10 @@ import os
 couleurs_disponibles = ["R", "G", "B", "Y", "P", "W", "K"]
 
 
-longueur_combinaison = 4   # nombre d'éléments du code secret 
-tentatives_max = 12        # nombre maximum de tentatives
+longueur_combinaison = 4 # nombre d'éléments du code secret 
+tentatives_max = 12 #nombre maximum de tentatives
+nbr_parties_jouees = 0 #nombre de parties qui ont été lancées au total
+score = 0 #score du joueur, +1pt à chaque partie gagnée
 
 
 
@@ -32,7 +39,7 @@ def main():
             elif menu == 3:
                 try:
                     choix = int(input(f"Entrez la longueur du code secret (2 à {len(couleurs_disponibles)}) : "))
-                    if 2 <= choix <= len(couleurs_disponibles):
+                    if 2 <= choix <= len(couleurs_disponibles): #pas de long que le nombre de couleurs dispo (7) parce qu'il faut sinon changer des choses dans le reste du programme
                         longueur_combinaison = choix
                         print(f"Longueur du code secret définie à {longueur_combinaison}")
                     else:
@@ -40,7 +47,7 @@ def main():
                 except ValueError:
                     print("Veuillez entrer un nombre valide.")
             else:
-                print("Choix invalide ! Veuillez choisir 1, 2 ou 3.")
+                print("Choix invalidé, veuillez choisir 1, 2 ou 3.")
         except ValueError:
             print("Veuillez entrer un nombre valide.")
 
@@ -65,7 +72,7 @@ def conversion_reponse(reponse_joueur):
     # Converti la réponse du joueur en quelque chose de comparable avec la combinaison générée
 
     combinaison_convertie = []
-    for lettre in reponse_joueur.upper():
+    for lettre in reponse_joueur.upper(): #upper mettre en maj
         if lettre in couleurs_disponibles:
             combinaison_convertie.append(lettre)
     return combinaison_convertie
@@ -107,6 +114,8 @@ def jeu():  # là où se passe le gameplay
 
     os.system('cls')
 
+    nbr_parties_jouees = nbr_parties_jouees + 1
+
     print("\nCouleurs disponibles :")
     print("R = Rouge | G = Vert | B = Bleu | Y = Jaune | P = Violet | W = Blanc | K = Noir")
     print(f"Entrez une combinaison de {longueur_combinaison} lettres (exemple : RBYK)")
@@ -132,6 +141,7 @@ def jeu():  # là où se passe le gameplay
 
         if bien == longueur_combinaison:
             print("Vous avez trouvé la combinaison")
+            score = score + 1
             return
 
     print("Vous avez épuisé vos tentatives. La combinaison était :", combinaison)
